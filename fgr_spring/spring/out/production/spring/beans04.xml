@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置monster对象-->
+    <bean class="com.hspedu.spring.bean.Monster" id="monster01">
+        <constructor-arg value="200" index="0"/>
+        <constructor-arg value="白骨金" index="1"/>
+        <constructor-arg value="吸人血" index="2"/>
+    </bean>
+
+    <!--spring el 表达式-->
+    <bean id="spElBean" class="com.hspedu.spring.bean.SpElBean">
+        <property name="name" value="#{'学习spring'}"/>
+        <property name="monster" value="#{monster01}"/>
+        <property name="monsterName" value="#{monster01.name}"/>
+        <!--某方法返回的值 赋给这个对象的属性-->
+        <property name="crySound" value="#{spElBean.cry('喵喵叫')}"/>
+        <!--调用静态方法返回赋值-->
+        <property name="bookName" value="#{T(com.hspedu.spring.bean.SpElBean).read('天龙八部')}"/>
+        <property name="result" value="#{89*1.2}"/>
+    </bean>
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--配置House对象-->
+    <bean class="com.hspedu.spring.bean.House" id="house"
+        init-method="init"
+        destroy-method="destroy">
+        <property name="name" value="豪宅"/>
+    </bean>
+
+    <bean class="com.hspedu.spring.bean.House" id="house2"
+          init-method="init"
+          destroy-method="destroy">
+        <property name="name" value="豪宅p"/>
+    </bean>
+
+    <!--配置后置处理器对象
+    当我们在bean02.xml  容器配置文件 配置了MyBeanPostProcessor
+    这时后置处理器会作用在该容器创建的所有bean对象
+    针对所有对象编程 切脉你编程
+    -->
+    <bean class="com.hspedu.spring.bean.MyBeanPostProcessor" id="beanPostProcessor"/>
+</beans>

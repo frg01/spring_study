@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--配置容器要扫描的包
+    component-scan 对指定的包下的类进行扫描并创建对象
+    base-package 指定要扫描的包是哪一个
+    当spring容器初始化时,就会扫描指定包下的所有有注解的类 进行实例化
+    生成对象,放入到ioc容器
+    resource-pattern="User*.class" 只加载指定类型
+    -->
+    <!--<context:component-scan base-package="com.hspedu.spring.component"/>-->
+
+    <!--如果希望排除某个包以及某个包下的某类型注解，
+    可以通过<context:exclude-filter 排除某种类型下的全类名
+    type 指定排除方式 annotation注解方式  expression：注解的全路径
+    -->
+    <!--<context:component-scan base-package="com.hspedu.spring.component">-->
+    <!--    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>-->
+    <!--</context:component-scan>-->
+
+    <!--只按照自己的意愿扫描包
+    use-default-filters="false" 先设置不使用默认的扫描机制
+    type 按注解方式扫描/过滤  expression 指定要扫描的注解的全路径
+    -->
+    <context:component-scan base-package="com.hspedu.spring.component" use-default-filters="false">
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+
+</beans>

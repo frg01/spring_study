@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--使用xml配置 完成AOP编程 -->
+    <!--配置切面类  一定要引入xmlns:aop-->
+    <bean class="com.hspedu.spring.aop.xml.SmartAnimalAspectj" id="smartAnimalAspectj"/>
+    <!--配置一个SmartDog对象-->
+    <bean class="com.hspedu.spring.aop.xml.SmartDog"/>
+    <!--切面信息-->
+    <aop:config>
+        <!--先配置切入点 表达式-->
+        <aop:pointcut id="myPointCut" expression="execution(public Float com.hspedu.spring.aop.xml.SmartDog.*(float, float))"/>
+        <!--这里指定切面对象-->
+        <aop:aspect ref="smartAnimalAspectj" order="10">
+            <!--配置前置通知 把切入方法配置到切入点表达式所写的路径-->
+            <aop:before method="f1" pointcut-ref="myPointCut" />
+            <!--返回通知-->
+            <aop:after-returning method="f2" pointcut-ref="myPointCut" returning="res"/>
+            <!--异常通知-->
+            <aop:after-throwing method="f3" pointcut-ref="myPointCut" throwing="throwable"/>
+            <!--最终通知-->
+            <aop:after method="f4" pointcut-ref="myPointCut"/>
+
+            <!--环绕通知-->
+            <!--<aop:around method="f1"-->
+        </aop:aspect>
+
+    </aop:config>
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--<context:component-scan base-package="com.hspedu.spring.aop.homework03"/>-->
+    <!--注解AOP 切面自动代理-->
+    <!--<aop:aspectj-autoproxy/>-->
+
+    <!--先把切面类装进容器-->
+    <bean class="com.hspedu.spring.aop.homework03.CalAspect2" id="calAspect2"/>
+    <!--把MyCal装进容器-->
+    <bean class="com.hspedu.spring.aop.homework03.MyCal"/>
+    <!--配置切面参数-->
+    <aop:config>
+        <!--配置切入点 -->
+        <aop:pointcut id="myPointCut" expression="execution(public Integer com.hspedu.spring.aop.homework03.MyCal.*(int)))"/>
+        <!--配置切面参考方法-->
+        <aop:aspect ref="calAspect2" order="2">
+            <aop:before method="showBeginLog" pointcut-ref="myPointCut"/>
+            <aop:after-returning method="showSuccessEndLog" pointcut-ref="myPointCut" returning="res"/>
+            <aop:after-throwing method="showExceptionLog" pointcut-ref="myPointCut" throwing="throwable"/>
+            <aop:after method="showFinallyLog" pointcut-ref="myPointCut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

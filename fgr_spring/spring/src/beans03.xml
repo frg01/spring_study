@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--自动装配 属性autowire="byType"时 自动在容器中帮助找到此对象的属性在容器中的位置,并关联
+    表示创建orderService时通过类型的方式 在给对象属性 自动完成赋值/引用
+    就会在容器中查找有没有orderDao类型的对象
+    如果有 , 就会自动的装配
+    如果按照byType类型的方式装配  容器中不能有两个以上相同的orderDao类型对象
+    如果对象没有属性 autowire就无必要了
+
+    如果我们设置的时autowire="byName" 表示通过名字完成自动装配
+    1.spring容器 会按照orderService属性 orderDao
+    2.在根据属性的setXxx方法的xxx 来找对象id
+    3.就会找id=orderDao对象来进行自动装配
+    4.如果装配失败
+    -->
+
+    <!--配置OrderDao -->
+    <bean class="com.hspedu.spring.dao.OrderDao" id="orderDao"/>
+    <!--配置OrderService对象-->
+    <bean autowire="byName" class="com.hspedu.spring.dao.OrderService" id="orderService"/>
+    <!--配置OrderAction-->
+    <bean autowire="byName" class="com.hspedu.spring.web.OrderAction" id="orderAction"/>
+
+
+    <!--先把文件修改成提示All Problem 提示错误 光标放在context 自动引入namespace
+    location="classpath:my.properties" 表示指定属性文件的位置
+    提示 需要带classpath
+    属性文件由中文，需要将其转为unicode编码
+    -->
+    <context:property-placeholder location="classpath:my.properties"/>
+    <!--配置monster对象
+   通过属性文件（指定）给monster对象属性赋值
+   属性通过${属性名}
+   属性名是my.properties 文件中的k-v的k
+   -->
+    <bean class="com.hspedu.spring.bean.Monster" id="monster1000">
+        <property name="monsterId" value="${monsterId}"/>
+        <property name="name" value="${name}"/>
+        <property name="skill" value="${skill}"/>
+    </bean>
+
+</beans>
